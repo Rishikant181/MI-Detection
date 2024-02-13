@@ -3,8 +3,20 @@ import matplotlib.pyplot as plt
 from scipy.fft import dct, idct, fft, ifft
 
 def fdm(X, fs, fc, data_type='columns', filter_type='dct', sort_fc='descend', remove_mean=False, plot_subbands=True):
-# Take care of Vector inputs for einsum()
-# ValueError: einstein sum subscripts string contains too many subscripts for operand 0
+    """
+    Performs decomposition of the input signal(s) using Fourier Decomposition Method.
+
+    Args:
+        X (2-D numpy_array): Array of horizontally stacked singals.
+        fs (int): Sampling frequence of the input signal(s).
+        fc (1-D numpy_array): Array of cut-off frequencies according to which sub-bands are to be generated.
+        plot_subbands (boolean): Whether to plot the subbands or not.
+
+    Returns:
+        2-D numpy_array: The subbands obtained after performing fourier decompoisition of the input signal(s).
+    """
+    # Take care of Vector inputs for einsum()
+    # ValueError: einstein sum subscripts string contains too many subscripts for operand 0
     if data_type == 'rows':
         axis = 1
         X = np.transpose(X)
