@@ -1,3 +1,7 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.fft import dct, idct, fft, ifft
+
 def fdm(X, fs, fc, data_type='columns', filter_type='dct', sort_fc='descend', remove_mean=False, plot_subbands=True):
 # Take care of Vector inputs for einsum()
 # ValueError: einstein sum subscripts string contains too many subscripts for operand 0
