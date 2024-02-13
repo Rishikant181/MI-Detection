@@ -6,7 +6,7 @@ def fdm(X, fs, fc, data_type='columns', filter_type='dct', sort_fc='descend', re
 # Take care of Vector inputs for einsum()
 # ValueError: einstein sum subscripts string contains too many subscripts for operand 0
     if data_type == 'rows':
-        # axis = 1
+        axis = 1
         X = np.transpose(X)
     else:
         axis = 0
@@ -92,7 +92,6 @@ def fdm(X, fs, fc, data_type='columns', filter_type='dct', sort_fc='descend', re
         FIBFs = Y  # Return output in 3D Matrix with the third dimension corresponding to different subbands    
 
     if plot_subbands:
-        # plt.show()
         t = np.arange(0, X.shape[0], 1) / fs
         fc = np.sort(fc)  # always sort fc in ascending order
         if fc[0] != 0:
@@ -105,7 +104,7 @@ def fdm(X, fs, fc, data_type='columns', filter_type='dct', sort_fc='descend', re
 
         no_of_subbands = len(fc) - 1
         if no_of_subbands >= 6:
-            m = np.floor(no_of_subbands/2) + 1
+            m = np.floor(no_of_subbands/2).astype(int) + 1
             n = 2  # Change to two-column tiled layout
         else:
             m = no_of_subbands + 1
@@ -140,7 +139,8 @@ def fdm(X, fs, fc, data_type='columns', filter_type='dct', sort_fc='descend', re
                     plt.title('FIBF {0}: Between {1} Hz to {2} Hz'.format(k, fc[k-1], fc[k]))
                 elif sort_fc == 'descend':
                     plt.title('FIBF {0}: Between {1} Hz to {2} Hz'.format(k, fc[k], fc[k-1]))
-        # plt.title('Fourier Decomposition Method')
+                    
+        plt.show()
 
     if data_type == 'rows':
         if X.shape[1] == 1:  # Output is returned as a 2D matrix if input to the function is a column vector or a row vector
