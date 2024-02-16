@@ -11,6 +11,4 @@ void loop()
 
     // Outputting the value to serial
     Serial.println(value);
-
-    delay(1000);
 }

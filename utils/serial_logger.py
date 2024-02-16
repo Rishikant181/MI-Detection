@@ -1,25 +1,31 @@
 from serial import Serial
+import numpy
+from scipy.io import wavfile
 
-def log(filename):
+def serial_to_wave(filename, fs):
     '''
     Logs the given data to a file.
 
     Args:
-        - data (string): The data to be logged
+        - filename (string): The name of the wave file to which data is to be written.
+        - fs (int): The sampling frequency of the wave file.
     '''
     # Initializing serial connection to COM3
     serial = Serial('com3')
 
-    # Initializing file
-    file = open(filename, 'w')
+    # Stores the recorded signal's samples
+    signal = numpy.array([])
 
-    for i in range(10):
-        # Reading the current line from serial
-        data = serial.readline().decode('utf-8').strip('\n')
+    try:
+        while True:
+            # Getting current intensity
+            intensity = int(serial.readline().decode('utf-8').strip('\n'))
+        
+            # Appending to output array
+            signal = numpy.append(signal, intensity)
 
-        # Writing the line
-        file.write(data)
+    except KeyboardInterrupt:
+        # Writing to wave file
+        wavfile.write(filename, fs, signal)
 
-    file.close()
-
-log('test_data.csv')
+serial_to_wave('test_signal.wav', 500)
