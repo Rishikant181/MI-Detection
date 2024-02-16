@@ -1,3 +1,11 @@
+// The values from each analog pin
+int a0;
+int a1;
+int a2;
+int a3;
+int a4;
+int a5;
+
 void setup()
 {
     // Setting baud rate for serial communications
@@ -6,9 +14,31 @@ void setup()
 
 void loop()
 {
-    // Reading the analog signal at pin A0
-    int value = analogRead(A0);
+    // Reading all analog pin values
+    a0 = analogRead(A0);
+    a1 = analogRead(A1);
+    a2 = analogRead(A2);
+    a3 = analogRead(A3);
+    a4 = analogRead(A4);
+    a5 = analogRead(A5);
 
-    // Outputting the value to serial
-    Serial.println(value);
+    // Outputting to serial;
+
+    Serial.print(a0);
+    Serial.print(',');
+
+    Serial.print(a1);
+    Serial.print(',');
+
+    Serial.print(a2);
+    Serial.print(',');
+
+    Serial.print(a3);
+    Serial.print(',');
+
+    Serial.print(a4);
+    Serial.print(',');
+
+    Serial.print(a5);
+    Serial.println();
 }
