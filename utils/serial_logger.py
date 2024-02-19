@@ -13,19 +13,25 @@ def serial_to_wave(filename, fs):
     # Initializing serial connection to COM3
     serial = Serial('com3')
 
-    # Stores the recorded signal's samples
-    signal = numpy.array([])
+    # Stores the recorded signals' samples
+    signals = numpy.array([])
 
     try:
         while True:
             # Getting current intensity
-            intensity = int(serial.readline().decode('utf-8').strip('\n'))
+            intensity_str = int(serial.readline().decode('utf-8').strip('\n'))
+
+            # Converting intensity string to a list of intensities from different channels
+            intensities = [int(intensity) for intensity in intensity_str]
         
             # Appending to output array
-            signal = numpy.append(signal, intensity)
+            signals = numpy.append(signal, intensities, axis=0)
 
     except KeyboardInterrupt:
-        # Writing to wave file
-        wavfile.write(filename, fs, signal)
+        # Writing to wave file(s)
+        i = 0
+        for signal in signals:
+            wavfile.write(filename + i + ".wave", fs, signal)
+            i += 1
 
-serial_to_wave('test_signal.wav', 500)
+serial_to_wave('test_signal', 500)
