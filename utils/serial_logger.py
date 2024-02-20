@@ -14,24 +14,27 @@ def serial_to_wave(filename, fs):
     serial = Serial('com3')
 
     # Stores the recorded signals' samples
-    signals = numpy.array([])
+    signals = numpy.zeros([6, 1])
 
     try:
         while True:
             # Getting current intensity
-            intensity_str = int(serial.readline().decode('utf-8').strip('\n'))
+            intensity_str = serial.readline().decode('utf-8').strip('\n').strip('\r')
 
             # Converting intensity string to a list of intensities from different channels
-            intensities = [int(intensity) for intensity in intensity_str]
+            intensities = numpy.array([[int(intensity) for intensity in intensity_str.split(',')]])
+            
+            # Reshaping the array to fit in signals
+            intensities = intensities.T
         
             # Appending to output array
-            signals = numpy.append(signal, intensities, axis=0)
+            signals = numpy.append(signals, intensities, axis=1)
 
     except KeyboardInterrupt:
         # Writing to wave file(s)
         i = 0
         for signal in signals:
-            wavfile.write(filename + i + ".wave", fs, signal)
+            wavfile.write(filename + str(i) + ".wave", fs, signal)
             i += 1
 
 serial_to_wave('test_signal', 500)
