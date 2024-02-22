@@ -1,0 +1,10 @@
+LTspice 24.0.9 for Windows
+Circuit: * D:\MI-Detection\circuits\Draft1.asc
+Start Time: Tue Feb 20 15:14:03 2024
+solver = Normal
+Maximum thread count: 8
+tnom = 27
+temp = 27
+method = modified trap
+Fatal Error: ra: Bad wavefile format found in d:\mi-detection\samples\converted\test_signal0.txt
+

@@ -34,7 +34,8 @@ def serial_to_wave(filename, fs):
         # Writing to wave file(s)
         i = 0
         for signal in signals:
-            wavfile.write(filename + str(i) + ".wave", fs, signal)
+            # wavfile.write(filename + str(i) + ".wave", fs, signal)
+            signal = numpy.append(signal, )
             i += 1
 
 serial_to_wave('test_signal', 500)
