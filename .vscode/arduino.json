@@ -1,5 +1,4 @@
 {
     "board": "arduino:avr:uno",
-    "port": "COM3",
-    "sketch": "utils\\serial_mocker\\serial_mocker.ino"
+    "port": "COM3"
 }
