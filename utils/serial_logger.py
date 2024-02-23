@@ -1,6 +1,5 @@
 from serial import Serial
 import numpy
-from scipy.io import wavfile
 
 def serial_to_wave(filename, fs):
     '''
@@ -10,11 +9,17 @@ def serial_to_wave(filename, fs):
         - filename (string): The name of the wave file to which data is to be written.
         - fs (int): The sampling frequency of the wave file.
     '''
+    # Calculating sampling delay
+    delay = 1 / fs
+
     # Initializing serial connection to COM3
     serial = Serial('com3')
 
     # Stores the recorded signals' samples
-    signals = numpy.zeros([6, 1])
+    signals = numpy.zeros([1, 7])
+
+    # Stores the current timestamp
+    timestamp = 0
 
     try:
         while True:
@@ -22,20 +27,19 @@ def serial_to_wave(filename, fs):
             intensity_str = serial.readline().decode('utf-8').strip('\n').strip('\r')
 
             # Converting intensity string to a list of intensities from different channels
-            intensities = numpy.array([[int(intensity) for intensity in intensity_str.split(',')]])
-            
-            # Reshaping the array to fit in signals
-            intensities = intensities.T
+            intensities = numpy.array([[int(intensity) for intensity in intensity_str.split(',')]]) / 1000
         
+            # Appending timestamp
+            intensities = numpy.append([[timestamp]], intensities, axis=1)
+            
+            # Incremeting timestamp
+            timestamp += delay
+            
             # Appending to output array
-            signals = numpy.append(signals, intensities, axis=1)
+            signals = numpy.append(signals, intensities, axis=0)
 
     except KeyboardInterrupt:
-        # Writing to wave file(s)
-        i = 0
-        for signal in signals:
-            # wavfile.write(filename + str(i) + ".wave", fs, signal)
-            signal = numpy.append(signal, )
-            i += 1
+        # Writing to csv
+        numpy.savetxt(filename, signals, delimiter=',')
 
-serial_to_wave('test_signal', 500)
+serial_to_wave('test_signal.csv', 500)

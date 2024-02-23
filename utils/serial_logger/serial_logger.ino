@@ -41,4 +41,6 @@ void loop()
 
     Serial.print(a5);
     Serial.println();
+
+    delay(2);
 }
