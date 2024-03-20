@@ -52,15 +52,13 @@ agg_df = agg_df[agg_df.diagnostic == 1]
 # Applying diagnostic superclass
 Y['diagnostic_superclass'] = Y.scp_codes.apply(aggregate_diagnostic)
 
-# Split data into train and test
-test_fold = 10
 
-# Training set
-X_train = X[numpy.where(Y.strat_fold != test_fold)]
-Y_train = Y[(Y.strat_fold != test_fold)].diagnostic_superclass
+# Saving the data
 
-# Testing set
-X_test = X[numpy.where(Y.strat_fold == test_fold)]
-Y_test = Y[Y.strat_fold == test_fold].diagnostic_superclass
+# Waveforms
+numpy.savetxt('waveforms.csv', X, delimiter=',')
+
+# Annotations
+Y['diagnostic_superclass'].to_csv('annotations.csv')
 
 print("Done!")
