@@ -46,7 +46,7 @@ Y = load_raw_annotations(path)
 X = load_raw_data(path, Y, 1)
 
 # Loading scp_statements.csv for diagnostic aggregation
-agg_df = pandas.read_csv(path+'scp_statements.csv', index_col=0)
+agg_df = pandas.read_csv(path + 'scp_statements.csv', index_col = 0)
 agg_df = agg_df[agg_df.diagnostic == 1]
 
 # Applying diagnostic superclass
