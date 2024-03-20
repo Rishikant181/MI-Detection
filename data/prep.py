@@ -62,3 +62,5 @@ Y_train = Y[(Y.strat_fold != test_fold)].diagnostic_superclass
 # Testing set
 X_test = X[numpy.where(Y.strat_fold == test_fold)]
 Y_test = Y[Y.strat_fold == test_fold].diagnostic_superclass
+
+print("Done!")
